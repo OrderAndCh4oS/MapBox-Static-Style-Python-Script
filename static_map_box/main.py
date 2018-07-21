@@ -3,7 +3,7 @@ import os
 from mapbox import StaticStyle
 
 
-def create_map_image():
+def create_map_image(features):
     env = os.environ.copy()
 
     user_name = env.get('MAPBOX_USER_NAME')
@@ -11,13 +11,7 @@ def create_map_image():
 
     service = StaticStyle()
 
-    portland = {
-        'type': 'Feature',
-        'properties': {'name': 'Portland, OR'},
-        'geometry': {
-            'type': 'Point',
-            'coordinates': [-122.7282, 45.5801]}}
-    response = service.image(user_name, map_code, features=[portland])
+    response = service.image(user_name, map_code, features=features)
 
     print(response)
     # add to a file
@@ -27,4 +21,16 @@ def create_map_image():
     print('done')
 
 if __name__ == '__main__':
-    create_map_image()
+    ipswich = {
+        'type': 'Feature',
+        'properties': {'name': 'Ipswich, Suffolk'},
+        'geometry': {
+            'type': 'Point',
+            'coordinates': [1.15545, 52.05917]}}
+    colchester = {
+        'type': 'Feature',
+        'properties': {'name': 'Colchester, Essex'},
+        'geometry': {
+            'type': 'Point',
+            'coordinates': [0.8919, 51.8959]}}
+    create_map_image([ipswich, colchester])
